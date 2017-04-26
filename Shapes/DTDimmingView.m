@@ -76,7 +76,7 @@
 
 -(void)updatePathsWithVisiblePath:(UIBezierPath *)visiblePath
 {
-    [self.fillLayer removeFromSuperlayer];
+//    [self.fillLayer removeFromSuperlayer];
     
     visiblePath.usesEvenOddFillRule = YES;
     
@@ -85,13 +85,20 @@
     [dimmedPath appendPath:visiblePath];
     dimmedPath.usesEvenOddFillRule = YES;
     
-    self.fillLayer = [CAShapeLayer layer];
+//    self.fillLayer = [CAShapeLayer layer];
     self.fillLayer.path = dimmedPath.CGPath;
     self.fillLayer.fillRule = kCAFillRuleEvenOdd;
     self.fillLayer.fillColor = self.dimmingColor.CGColor;
     self.fillLayer.opacity = self.dimmingOpacity;
     
-    [self.layer addSublayer:self.fillLayer];
+//    [self.layer addSublayer:self.fillLayer];
 }
-
-@end
+// lazy
+-(CAShapeLayer *)fillLayer
+{
+    if (!_fillLayer) {
+        _fillLayer = [CAShapeLayer layer];
+        [self.layer addSublayer:self.fillLayer];
+    }
+    return _fillLayer;
+}@end
